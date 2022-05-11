@@ -294,7 +294,13 @@ function showLegalMoves(from) {
 }
 function setArrow(state) {
   _arrow = state;
-  if (_arrow && _curmoves.length > 0 && _curmoves[0].eval != null) showArrow1(_curmoves[0].move); else showArrow1();
+    if (_arrow && _curmoves.length > 0) {
+		for (const i = 1; i <= 5; i++) {
+			if (_curmoves[i].eval != null) {
+				showArrow1(_curmoves[i].move, i);
+			} else showArrow1();
+		}
+    } else showArrow1();
 }
 function repaintLastMoveArrow() {
   var lastmove = (getCurFEN() == _history[_historyindex][0] && _history[_historyindex].length > 2) ? _history[_historyindex][2] : null;
@@ -377,7 +383,7 @@ function doHighlightMove(index) {
   showBoard(getCurFEN() == oldfen);
   doComputerMove();
 }
-function showArrowInternal(move, wrapperId) {
+function showArrowInternal(move, wrapperId, index) {
   var elem = document.getElementById(wrapperId);
   if (move == null) { elem.style.display = "none"; return; }
   elem.style.top = document.getElementById('chessboard1').getBoundingClientRect().top
@@ -385,14 +391,14 @@ function showArrowInternal(move, wrapperId) {
   elem.style.left = document.getElementById('chessboard1').getBoundingClientRect().left
                   - document.getElementById("container").getBoundingClientRect().left + "px";
   elem.style.width = elem.style.height = (40 * 8) + "px";
-  var line = elem.children[0].children[1];
+  var line = elem.children[0].children[index];
   line.setAttribute('x1', 20+(_flip?7-move.from.x:move.from.x)*40);
   line.setAttribute('y1', 20+(_flip?7-move.from.y:move.from.y)*40);
   line.setAttribute('x2', 20+(_flip?7-move.to.x:move.to.x)*40);
   line.setAttribute('y2', 20+(_flip?7-move.to.y:move.to.y)*40);
   elem.style.display = "block";
 }
-function showArrow1(move) { showArrowInternal(move, "arrowWrapper1"); }
+function showArrow1(move, index = 1) { showArrowInternal(move, "arrowWrapper1", index); }
 function showArrow2(move) { showArrowInternal(move, "arrowWrapper2"); }
 function updateInfo() {
   var addline = function(e, label, value, color, right, className, underline) {
