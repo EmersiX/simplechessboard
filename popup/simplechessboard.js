@@ -295,9 +295,9 @@ function showLegalMoves(from) {
 function setArrow(state) {
   _arrow = state;
     if (_arrow && _curmoves.length > 0) {
-		for (let i = 1; i <= 5; i++) {
+		for (let i = 0; i < 5; i++) {
 			if (_curmoves[i].eval != null) {
-				showArrow1(_curmoves[i].move, i);
+				showArrow1(_curmoves[i].move, i + 1);
 			} else showArrow1();
 		}
     } else showArrow1();
