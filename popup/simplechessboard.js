@@ -383,7 +383,7 @@ function doHighlightMove(index) {
   showBoard(getCurFEN() == oldfen);
   doComputerMove();
 }
-function showArrowInternal(move, wrapperId, index) {
+function showArrowInternal(move, wrapperId, index = 1) {
   var elem = document.getElementById(wrapperId);
   if (move == null) { elem.style.display = "none"; return; }
   elem.style.top = document.getElementById('chessboard1').getBoundingClientRect().top
